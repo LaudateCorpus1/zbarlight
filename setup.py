@@ -2,11 +2,32 @@
 # -*- coding: utf-8 -*-
 import os
 from setuptools import setup, find_packages, Extension
-
+from distutils.command.build import build as DistutilsBuild
 
 def read(file_path):
     with open(file_path) as fp:
         return fp.read()
+
+class Build(DistutilsBuild):
+    def run(self):
+        cores_to_use = max(1, multiprocessing.cpu_count() - 1)
+        cmd = ['./configure', '--disable-dependency-tracking', '--without-python', '--without-qt', '--disable-video', '--without-gtk', '--without-imagemagick', '--with-x=no']
+        try:
+            subprocess.check_call(cmd)
+        except subprocess.CalledProcessError as e:
+            sys.stderr.write("Could not build fastzbarlight: %s.\n" % e)
+            raise
+
+        cmd = ['make']
+        try:
+            subprocess.check_call(cmd)
+        except subprocess.CalledProcessError as e:
+            sys.stderr.write("Could not build fastzbarlight: %s.\n" % e)
+            raise
+        except OSError as e:
+            sys.stderr.write("Unable to execute '{}'. HINT: are you sure `make` is installed?\n".format(' '.join(cmd)))
+            raise
+        DistutilsBuild.run(self)
 
 setup(
     name='zbarlight',
