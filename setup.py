@@ -46,7 +46,7 @@ class Build(DistutilsBuild):
 
 setup(
     name='fastzbarlight',
-    version='0.0.4gi',
+    version='0.0.5',
     description="A fork of zbarlight, which includes a vendored copy of zbar compiled with optimization flags",
     long_description=read('README.rst'),
     classifiers=[
