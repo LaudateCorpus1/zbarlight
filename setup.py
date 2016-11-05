@@ -3,19 +3,25 @@
 import multiprocessing
 import os
 import subprocess
-from setuptools import setup, find_packages, Extension
+import sys
+
+from setuptools import find_packages, Extension
+from distutils.core import setup
 from distutils.command.build import build as DistutilsBuild
 
 def read(file_path):
     with open(file_path) as fp:
         return fp.read()
 
+with open(os.path.join(os.path.dirname(__file__), 'package_data.txt')) as f:
+    package_data = [line.rstrip() for line in f.readlines()]
+
 # For parsing a 100x100 QR code, the default libzbar on Ubuntu is
 # about 3x slower than when it's compiled with -O3. Thus we vendor and
 # compile our own.
 class Build(DistutilsBuild):
     def run(self):
-        zbar = os.path.join(os.path.dirname(__file__), 'vendor/zbar-0.10')
+        zbar = os.path.join(os.path.dirname(__file__), 'src/fastzbarlight/vendor/zbar-0.10')
 
         cores_to_use = max(1, multiprocessing.cpu_count() - 1)
         # Need -D_FORTIFY_SOURCE=0 since otherwise the build fails in
@@ -40,9 +46,9 @@ class Build(DistutilsBuild):
         DistutilsBuild.run(self)
 
 setup(
-    name='zbarlight',
-    version='1.0.3.dev0',
-    description="A simple zbar wrapper",
+    name='fastzbarlight',
+    version='0.0.2',
+    description="A fork of zbarlight, which includes a vendored copy of zbar compiled with optimization flags",
     long_description=read('README.rst'),
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -59,25 +65,22 @@ setup(
         'Topic :: Scientific/Engineering :: Image Recognition',
     ],
     keywords=['zbar', 'QR code reader'],
-    author='Polyconseil',
-    author_email='opensource+zbarlight@polyconseil.fr',
-    url='https://github.com/Polyconseil/zbarlight/',
     license='BSD',
     packages=find_packages(where='src', exclude=['docs', 'tests']),
     package_dir={'': str('src')},
     ext_modules=[
         Extension(
-            name=str('zbarlight._zbarlight'),
-            sources=[str('src/zbarlight/_zbarlight.c')],
+            name=str('fastzbarlight._zbarlight'),
+            sources=[str('src/fastzbarlight/_zbarlight.c')],
             extra_compile_args=['-std=c99', '-fPIC'],
-            include_dirs=[os.path.join(os.path.dirname(__file__), 'vendor/zbar-0.10/include')],
+            include_dirs=[os.path.join(os.path.dirname(__file__), 'src/fastzbarlight/vendor/zbar-0.10/include')],
             # library_dirs=[os.path.join(os.path.dirname(__file__), 'vendor/zbar-0.10/zbar/.libs')],
             # libraries=['vendor/zbar-0.10/zbar/.libs/libzbar.a'],
             optional=os.environ.get('READTHEDOCS', False),  # Do not build on Read the Docs
-            extra_link_args=['vendor/zbar-0.10/zbar/.libs/libzbar.a'],
+            extra_link_args=[os.path.join(os.path.dirname(__file__), 'src/fastzbarlight/vendor/zbar-0.10/zbar/.libs/libzbar.a')],
         ),
     ],
-    include_package_data=True,
+    package_data={'fastzbarlight': package_data},
     zip_safe=False,
     setup_requires=[
         'setuptools',

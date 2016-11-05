@@ -1,5 +1,13 @@
 .PHONY: update docs quality tests clean
 
+upload:
+	rm -rf dist
+	python setup.py sdist
+	twine upload dist/*
+
+package_data.txt:
+	( cd src/fastzbarlight && git ls-files vendor ) > package_data.txt
+
 update:
 	pip install -r requirements-dev.txt
 	python setup.py build_ext --inplace
