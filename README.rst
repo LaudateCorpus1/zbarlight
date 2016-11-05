@@ -1,3 +1,17 @@
+fastzbarlight
+-------------
+
+fastzbarlight is a fork of zbarlight which ships with its own vendored
+libzbar, which it compiles with optimization flags to make it faster
+than the stock Ubuntu version. Try out the simple "trial.py"
+benchmark in this repository:
+
+```
+$ python trial.py
+Average call time with zbarlight: 2.0961521719982557ms (1000 tries)
+Average call time with fastzbarlight: 0.7335694559988042ms (1000 tries)
+```
+
 ZbarLight
 =========
 

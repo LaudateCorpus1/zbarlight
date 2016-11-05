@@ -46,7 +46,7 @@ class Build(DistutilsBuild):
 
 setup(
     name='fastzbarlight',
-    version='0.0.5',
+    version='0.0.6',
     description="A fork of zbarlight, which includes a vendored copy of zbar compiled with optimization flags",
     long_description=read('README.rst'),
     classifiers=[
@@ -73,8 +73,7 @@ setup(
             sources=[str('src/fastzbarlight/_zbarlight.c')],
             extra_compile_args=['-std=c99', '-fPIC'],
             include_dirs=[os.path.join(os.path.dirname(__file__), 'src/fastzbarlight/vendor/zbar-0.10/include')],
-            # library_dirs=[os.path.join(os.path.dirname(__file__), 'vendor/zbar-0.10/zbar/.libs')],
-            # libraries=['vendor/zbar-0.10/zbar/.libs/libzbar.a'],
+            libraries=['iconv'],
             optional=os.environ.get('READTHEDOCS', False),  # Do not build on Read the Docs
             extra_link_args=[os.path.join(os.path.dirname(__file__), 'src/fastzbarlight/vendor/zbar-0.10/zbar/.libs/libzbar.a')],
         ),
