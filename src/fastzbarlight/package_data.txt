@@ -1,3 +1,5 @@
+vendor/zbar-0.10/zbar/.libs/libzbar.a
+package_data.txt
 vendor/Makefile
 vendor/zbar-0.10.tar.bz2.sha
 vendor/zbar-0.10/COPYING

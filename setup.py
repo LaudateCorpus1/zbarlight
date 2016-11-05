@@ -13,7 +13,7 @@ def read(file_path):
     with open(file_path) as fp:
         return fp.read()
 
-with open(os.path.join(os.path.dirname(__file__), 'package_data.txt')) as f:
+with open(os.path.join(os.path.dirname(__file__), 'src/fastzbarlight/package_data.txt')) as f:
     package_data = [line.rstrip() for line in f.readlines()]
 
 # For parsing a 100x100 QR code, the default libzbar on Ubuntu is
@@ -46,7 +46,7 @@ class Build(DistutilsBuild):
 
 setup(
     name='fastzbarlight',
-    version='0.0.2',
+    version='0.0.4gi',
     description="A fork of zbarlight, which includes a vendored copy of zbar compiled with optimization flags",
     long_description=read('README.rst'),
     classifiers=[
