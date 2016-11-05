@@ -6,7 +6,7 @@ upload:
 	twine upload dist/*
 
 package_data.txt:
-	( cd src/fastzbarlight && git ls-files vendor ) > package_data.txt
+	( echo vendor/zbar-0.10/zbar/.libs/libzbar.a && cd src/fastzbarlight && git ls-files vendor ) > package_data.txt
 
 update:
 	pip install -r requirements-dev.txt

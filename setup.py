@@ -28,8 +28,7 @@ class Build(DistutilsBuild):
         # system header files.
         cmd = ['./configure', '--disable-dependency-tracking', '--without-python', '--without-qt', '--disable-video', '--without-gtk', '--without-imagemagick', '--with-x=no', 'CFLAGS=-Wall -Wno-parentheses -D_FORTIFY_SOURCE=0 -O3 -fPIC']
         try:
-#            subprocess.check_call(cmd, cwd=zbar)
-            pass
+            subprocess.check_call(cmd, cwd=zbar)
         except subprocess.CalledProcessError as e:
             sys.stderr.write("Could not build fastzbarlight: %s.\n" % e)
             raise
