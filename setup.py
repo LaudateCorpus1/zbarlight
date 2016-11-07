@@ -26,7 +26,7 @@ class Build(DistutilsBuild):
         cores_to_use = max(1, multiprocessing.cpu_count() - 1)
         # Need -D_FORTIFY_SOURCE=0 since otherwise the build fails in
         # system header files.
-        cmd = ['./configure', '--disable-dependency-tracking', '--without-python', '--without-qt', '--disable-video', '--without-gtk', '--without-imagemagick', '--without-libiconv', '--with-x=no', 'CFLAGS=-Wall -Wno-parentheses -D_FORTIFY_SOURCE=0 -O3 -fPIC']
+        cmd = ['./configure', '--disable-dependency-tracking', '--without-python', '--without-qt', '--disable-video', '--without-gtk', '--without-imagemagick', '--with-x=no', 'CFLAGS=-Wall -Wno-parentheses -D_FORTIFY_SOURCE=0 -O3 -fPIC']
         try:
             subprocess.check_call(cmd, cwd=zbar)
         except subprocess.CalledProcessError as e:
@@ -44,9 +44,18 @@ class Build(DistutilsBuild):
             raise
         DistutilsBuild.run(self)
 
+# HACK: it'd be better to build zbar without iconv, but this is
+# easier for now
+proc = subprocess.Popen(['ld', '-liconv'], stderr=subprocess.PIPE)
+_, stderr = proc.communicate()
+if b'cannot find' in stderr:
+    librariers = []
+else:
+    libraries = ['iconv']
+
 setup(
     name='fastzbarlight',
-    version='0.0.9',
+    version='0.0.10',
     description="A fork of zbarlight, which includes a vendored copy of zbar compiled with optimization flags",
     long_description=read('README.rst'),
     classifiers=[
@@ -75,6 +84,7 @@ setup(
             include_dirs=[os.path.join(os.path.dirname(__file__), 'src/fastzbarlight/vendor/zbar-0.10/include')],
             optional=os.environ.get('READTHEDOCS', False),  # Do not build on Read the Docs
             extra_link_args=[os.path.join(os.path.dirname(__file__), 'src/fastzbarlight/vendor/zbar-0.10/zbar/.libs/libzbar.a')],
+            libraries=libraries,
         ),
     ],
     package_data={'fastzbarlight': package_data},
