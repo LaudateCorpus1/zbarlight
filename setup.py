@@ -55,7 +55,7 @@ else:
 
 setup(
     name='fastzbarlight',
-    version='0.0.10',
+    version='0.0.11',
     description="A fork of zbarlight, which includes a vendored copy of zbar compiled with optimization flags",
     long_description=read('README.rst'),
     classifiers=[
