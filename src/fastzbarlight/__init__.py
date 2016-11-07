@@ -7,7 +7,7 @@ import pkg_resources
 from ._zbarlight import zbar_code_scanner
 
 
-__version__ = pkg_resources.get_distribution('zbarlight').version
+__version__ = pkg_resources.get_distribution('fastzbarlight').version
 __ALL__ = ['scan_codes', 'qr_code_scanner']
 
 
