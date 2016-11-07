@@ -26,7 +26,7 @@ class Build(DistutilsBuild):
         cores_to_use = max(1, multiprocessing.cpu_count() - 1)
         # Need -D_FORTIFY_SOURCE=0 since otherwise the build fails in
         # system header files.
-        cmd = ['./configure', '--disable-dependency-tracking', '--without-python', '--without-qt', '--disable-video', '--without-gtk', '--without-imagemagick', '--without-libiconv-prefix', '--with-x=no', 'CFLAGS=-Wall -Wno-parentheses -D_FORTIFY_SOURCE=0 -O3 -fPIC']
+        cmd = ['./configure', '--disable-dependency-tracking', '--without-python', '--without-qt', '--disable-video', '--without-gtk', '--without-imagemagick', '--without-libiconv', '--with-x=no', 'CFLAGS=-Wall -Wno-parentheses -D_FORTIFY_SOURCE=0 -O3 -fPIC']
         try:
             subprocess.check_call(cmd, cwd=zbar)
         except subprocess.CalledProcessError as e:
