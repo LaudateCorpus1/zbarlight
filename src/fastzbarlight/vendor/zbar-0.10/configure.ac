@@ -106,7 +106,6 @@ ZBAR_CHK_CODE([qrcode], [QR Code])
 dnl libraries
 
 AC_SEARCH_LIBS([clock_gettime], [rt])
-AM_ICONV()
 
 dnl poll support
 
