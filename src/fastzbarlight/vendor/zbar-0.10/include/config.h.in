@@ -33,9 +33,6 @@
 /* Define to 1 if you have the `getpagesize' function. */
 #undef HAVE_GETPAGESIZE
 
-/* Define if you have the iconv() function and it works. */
-#undef HAVE_ICONV
-
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
@@ -123,9 +120,6 @@
 /* Define to 1 if you have the <X11/extensions/Xvlib.h> header file. */
 #undef HAVE_X11_EXTENSIONS_XVLIB_H
 
-/* Define as const if the declaration of iconv() needs const. */
-#undef ICONV_CONST
-
 /* Library major version */
 #undef LIB_VERSION_MAJOR
 
@@ -179,12 +173,12 @@
 #undef ZBAR_VERSION_MINOR
 
 /* Define for Solaris 2.5.1 so the uint32_t typedef from <sys/synch.h>,
-   <pthread.h>, or <semaphore.h> is not used. If the typedef were allowed, the
+   <pthread.h>, or <semaphore.h> is not used. If the typedef was allowed, the
    #define below would cause a syntax error. */
 #undef _UINT32_T
 
 /* Define for Solaris 2.5.1 so the uint8_t typedef from <sys/synch.h>,
-   <pthread.h>, or <semaphore.h> is not used. If the typedef were allowed, the
+   <pthread.h>, or <semaphore.h> is not used. If the typedef was allowed, the
    #define below would cause a syntax error. */
 #undef _UINT8_T
 
