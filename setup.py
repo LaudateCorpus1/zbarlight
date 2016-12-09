@@ -48,7 +48,7 @@ class Build(DistutilsBuild):
 # easier for now
 proc = subprocess.Popen(['ld', '-liconv'], stderr=subprocess.PIPE)
 _, stderr = proc.communicate()
-if b'cannot find' in stderr:
+if b'-liconv' in stderr:
     libraries = []
 else:
     libraries = ['iconv']
